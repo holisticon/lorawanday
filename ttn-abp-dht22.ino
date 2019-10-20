@@ -1,7 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2015 Thomas Telkamp and Matthijs Kooijman
- *
- *
+ * Based onf ttn-abp.ino
+ * Adds DHT-22 sensor evaluation.
  *******************************************************************************/
 
 #include <lmic.h>
@@ -16,8 +15,8 @@
  */
 #define DHTPIN 7
 
-/* 
- * DHT11 or DHT22 
+/*
+ * DHT11 or DHT22
  */
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
@@ -60,6 +59,9 @@ const lmic_pinmap lmic_pins = {
     .dio = {2, 3, LMIC_UNUSED_PIN},
 };
 
+/**
+ * No chages required below this line.
+ */
 void onEvent (ev_t ev) {
     Serial.print(os_getTime());
     Serial.print(": ");

@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Holisticon Presentation Template</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+    <link rel="stylesheet" href="styles/reveal.css" media="all">
+
+    <link rel="stylesheet" href="styles/presentation.css" media="all">
+
+    <link rel="shortcut icon" href="images/brand/favicon.png">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+        if( window.location.search.match( /print-pdf/gi ) ) {
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = 'node_modules/reveal.js/css/print/pdf.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+            var linkMore = document.createElement('link');
+            linkMore.rel = 'stylesheet';
+            linkMore.type = 'text/css';
+            linkMore.href = 'styles/pdf.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( linkMore );
+        }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+    <div class="slides">
+        <section data-markdown  data-separator="^---$" data-separator-vertical="^--$" data-separator-notes="^>NOTES:"><script type="text/template"># LoRaWAN Day 2019
+<br />
+<br />
+<br />
+
+18.10.2019
+
+![Twitter - Holisticon](images/brand/tweet_logo.png)<!-- .element: class="inline" style="max-height:32px; vertical-align: top; " --> [@holisticon](https://twitter.com/holisticon) ![Twitter - IoTHamburg](images/brand/tweet_logo.png)<!-- .element: class="inline" style="max-height:32px; vertical-align: top; " --> [@iothamburg](https://twitter.com/iothamburg)<br />
+
+
+<!-- .slide: class="title" data-background="images/brand/mainboard_logo.png" data-background-repeat="repeat-x" data-background-position="bottom center" data-background-size="inherit" -->
+
+---
+
+# Schedule
+
+* LoRaWAN theory
+* The Things Network
+* Hands-on DIY LoRaWAN Node based on Arduino
+* Hands-on DIY LoRaWAN Gateway
+* Official launch of the first gateway
+
+---
+
+# LoRaWAN Theory
+
+--
+
+## Wireless network classifications
+
+* Short-range wireless communication
+  * NFC/RFID
+  * ZigBee
+  * Bluetooth / BLE
+  * WiFi
+* Cellular communications
+  * 2G
+  * 3G
+  * 4G
+  * 5G
+* Low Power Wide Area Network (LPWAN)
+  * __LoRa__
+  * Sigfox
+  * Narrow Band IoT (NB-IoT)
+
+--
+
+## LoRa IP and licensing
+
+* LoRa is developed by Cycleo, France
+* in 2012, Cycleo acquired by Semtech Corporation
+* Semtech licensed LoRa to chip manufacturers: HopeRF, Microchip, Dorji, etc...
+* LoRa is a Trademark of Semtech Corporation filed 2015
+
+--
+
+## LoRa Specs
+
+* LoRa = Long Range
+* Transfer rate: 0.3 - 5.5 kbps
+* Tx power ~20 mW
+* Range:
+  * Urban: ~ 2-5 km
+  * Countryside: ~ 5-15 km
+  * Direct line of sight: > 15km
+
+--
+
+## LoRa vs. LoRaWAN
+
+![TTN Logo](images/lora_protocol_stack.png)
+
+https://lora.readthedocs.io/en/latest/ <!-- .element: style="font-size:xx-small;" -->
+
+--
+
+## LoRaWAN
+
+* Developed by LoRa Alliance
+* Non-Profit, 500+ memebers
+
+--
+
+## LoRaWAN Network
+
+* Star topology
+* Gateways, Nodes
+* BiDi comm between Gateway and Nodes
+  * uplink: from node to gateway
+  * downlink: from gateway to node
+* no direct Node-Node communication
+
+--
+
+## LoRaWAN how does it work?
+
+* Broadcast from Nodes to every Gateway
+* Gateways forward packet to Network Server
+* Network Server de-duplicates packets, finds nearest Gateways
+* Network Server routes packet to Application Server
+* (optional) Application server sends response
+* (optional) Network Server routes to nearest Gateway
+* (optional) Gateway brodcasts the response
+
+--
+
+## LoRa Regulations
+
+* unlicensed radio band (863-870MHz in EU)
+* maximum uplink transmission power limited to 25mW (14 dBm)
+* maximum downlink transmission power limited to 500mW (27 dBm)
+* duty cycle: 0.1% or 1.0% dependening on channel
+
+---
+
+# The Things Network
+
+![TTN Logo](images/ttn_logo.svg) <!-- .element: class="inline" style="max-height:200px; vertical-align: top; background-color: #357ac4;" -->
+
+Building a global open LoRaWAN™ network.
+
+https://www.thethingsnetwork.org/ <!-- .element: style="font-size:xx-small;" -->
+
+--
+
+## TTN Details
+
+* Build world-wide network
+* Open for everyone
+* Free to use (Gateways and Nodes)
+* Fair use:
+  * uplink: 30 sec / day / node
+  * downlink: 10 messages / day / node
+* Integrations for own applications
+
+
+--
+
+## Global Network
+
+![TTN Numbers](images/ttn_numbers.png)
+
+https://www.thethingsnetwork.org/ <!-- .element: style="font-size:xx-small;" -->
+--
+
+## Hamburg+
+
+![TTN Numbers Hamburg](images/ttn_numbers_hamburg.png)
+
+https://www.thethingsnetwork.org/ <!-- .element: style="font-size:xx-small;" -->
+--
+
+## TTN Overview
+
+![TTN Overview](images/ttn_overview_architecture.png)
+
+* Devices
+* Gateways
+* Network
+* Applications
+
+https://www.thethingsnetwork.org/ <!-- .element: style="font-size:xx-small;" -->
+--
+
+## TTN | Devices
+
+* also End Node, LoRa End Node, LoRa Node
+* Device
+  * Microcontroller (e.g. Arduino, ATMega, ATTiny)
+  * LoRa radio module (e.g. RFM95B)
+  * (optional) Sensors
+--
+
+## TTN Device Activation
+* Over The Air Activation (OTAA)
+  * More secure, ready for production
+  * Requires a downlink window to confirm activation
+* Activation by Personalization (ABP)
+  * Pre-configures keys, suitable for workshops and demos
+  * Faster
+
+--
+
+## TTN | Gateways | Overview
+
+![TTN Gateways Overview](images/ttn_gateways_overview.png)
+
+https://www.thethingsnetwork.org/ <!-- .element: style="font-size:xx-small;" -->
+--
+
+## TTN | Gateways | Packet Forwarding
+
+![TTN Packet Forwarding](images/ttn_packet_forwarding.png)
+
+https://www.thethingsnetwork.org/ <!-- .element: style="font-size:xx-small;" -->
+--
+
+## TTN | Network | Overview
+
+![TTN Network Architecture](images/ttn_architecture.png)
+
+
+https://www.thethingsnetwork.org/ <!-- .element: style="font-size:xx-small;" -->
+--
+
+## TTN | Applications
+
+* Application Manager API
+  * manage applications
+  * manage devices
+* Data API
+  * receive data (downlink)
+  * send data (uplink)
+
+--
+
+## TTN | Applications | SDK Options
+
+![TTN Options SDKs](images/ttn_options-sdks.png)
+
+* Go
+* Java
+* Node-RED
+* Node.js
+* Python
+
+https://www.thethingsnetwork.org/ <!-- .element: style="font-size:xx-small;" -->
+--
+
+## TTN | Applications | Integration Options
+
+![TTN Options Integrations](images/ttn_options-integration.png)
+
+https://www.thethingsnetwork.org/ <!-- .element: style="font-size:xx-small;" -->
+--
+
+## TTN | Applications | HTTP Options
+
+![TTN Options HTTP](images/ttn_options-http.png)
+
+https://www.thethingsnetwork.org/ <!-- .element: style="font-size:xx-small;" -->
+---
+
+# TTN Application Integration
+
+--
+
+* Data Integration API
+ * read data via REST (native)
+ * use TTN library
+* HTTP Integration API
+ * get informed via REST (POST)
+
+--
+
+## TTN DHT22 Demo Application
+
+![TTN Application Overview](images/ttn_application_overview.png)
+[link](https://console.thethingsnetwork.org/applications/holisticon_arduino_dht22)
+
+--
+
+## TTN DHT22 Demo Console
+
+![TTN Console](images/ttn_console.png)
+
+[link](https://holisticon_arduino_node.data.thethingsnetwork.org/#!/query47123device45id125/get_api_v2_query_device_id)
+
+--
+
+## TTN Data Integration Example (ttn)
+
+```js
+var ttn = require("ttn")
+var appID = "" // app id
+var accessKey = "" // app access key
+
+ttn.data(appID, accessKey)
+  .then(function (client) {
+    client.on("uplink", function (devID, payload) {
+      console.log("Received uplink from ", devID)
+      console.log(payload)
+    })
+  })
+  .catch(function (error) {
+    console.error("Error", error)
+    process.exit(1)
+  });
+
+```
+
+
+--
+
+## TTN Data Integrtion Example (REST)
+
+```js
+const express = require('express')
+const https = require('https');
+const cors = require('cors');
+const app = express()
+app.use(cors());
+app.get('/data', function (req, res) {
+  https.get({
+      hostname: 'holisticon_arduino_dht22.data.thethingsnetwork.org',
+      port: 443,
+      path: '/api/v2/query',
+      headers: {
+        Accept: 'application/json', Authorization: 'key ....' // auth key
+      }
+  }, (resp) => {
+    let data = '';
+    resp.on('data', (chunk) => { data += chunk; });
+    resp.on('end', () => { res.send(JSON.parse(data)); });
+
+    }).on("error", (err) => { res.send(err); }
+  );
+});
+app.listen(3000)
+```
+
+---
+
+# LoRaWAN Hello World Node
+
+--
+
+## Hardware
+
+* Arduino Uno
+* RFM-95B (SX1276)
+
+![Arduino RFM95B](images/rfm95.jpg)
+
+https://www.antratek.de/rfm95-lora-module <!-- .element: style="font-size:xx-small;" -->
+
+--
+
+## Wiring plan
+
+![Arduino RFM95B](images/arduino_rfm95_bb.png)<!-- .element: class="inline" style="max-height:800px; vertical-align: top;" -->
+
+--
+
+## Radio connection plan
+
+| HopeRF RFM95  | Arduino Uno     | HopeRF RFM95  | Arduino Uno     |
+| ------------- | --------------- | ------------- | --------------- |
+| ANT           | -               | GND           | -               |
+| GND           | GND             | DIO5          | -               |
+| DIO3          | -               | RESET         | 5               |
+| DIO4          | -               | NSS           | 10              |
+| 3.3V          | 3.3V            | SCK           | 13              |
+| DIO0          | 2               | MOSI          | 11              |
+| DIO1          | 3               | MISO          | 12              |
+| DIO2          | -               | GND           | -               |
+
+--
+
+## Development
+
+* Install Arduino IDE
+* Install IBM LMIC Framework (https://github.com/matthijskooijman/arduino-lmic)
+* Configure LMIC
+* Customize `ttn-abp`
+* Flush, Run..
+
+--
+
+## Configure LMIC
+
+~/Arduino/libraries/arduino-lmic-1.5.0-arduino-2/src/lmic/config.h
+
+```cpp
+
+// If you live in Europe, set frequency.
+#define CFG_eu868 1
+
+// If you use a HopeRF RFM95 module, set chip model.
+#define CFG_sx1276_radio 1
+
+// If you want logging in the serial monitor, set log level.
+#define LMIC_DEBUG_LEVEL 2
+
+#define LMIC_FAILURE_TO Serial
+
+// Disable this feature. It is not needed and space is freed up.
+#define DISABLE_PING
+
+// Disable this feature. It is not needed and space is freed up.
+#define DISABLE_BEACONS
+
+```
+
+--
+
+## Register TTN application
+
+* Open Console
+* Create application
+* Create device (activation = ABP)
+* Configure decoder function (in Payload Formats)
+
+```js
+function Decoder(bytes, port) {
+  var result = "";
+  for (var i = 0; i < bytes.length; i++) {
+    result += (String.fromCharCode(bytes[i]));
+  }
+
+  return {text: result};
+}
+```
+
+--
+
+## Configure TTN parameters and pins
+
+* Open `ttn-abp`
+* Change code below
+* Select Tools > Board > Arduino Uno
+* Select Tools > Port
+* Compile, Flash, Restart Arduino
+* Open Serial Monitor
+
+```cpp
+// Network Session key (MSB)
+static const PROGMEM u1_t NWKSKEY[16] = { 0x.. };
+
+// Application Session Key (MSB)
+static const u1_t PROGMEM APPSKEY[16] = { 0x.. };
+
+// Device Address
+static const u4_t DEVADDR = 0x.... ;
+
+// Pin mapping
+const lmic_pinmap lmic_pins = {
+    .nss = 10,
+    .rxtx = LMIC_UNUSED_PIN,
+    .rst = 5,
+    .dio = {2, 3, LMIC_UNUSED_PIN},
+};
+```
+--
+
+## How does it work?
+
+```cpp
+
+/**
+ * Schedules send callback to every 60 seconds
+ */
+void onEvent (ev_t ev)
+/**
+ * Send callback, sends "hello world" string
+ */
+void do_send(osjob_t* j)
+/**
+ * Init LMIC, setting connection parameters
+ */
+void setup()
+/**
+ * Starts the loop
+ */
+void loop()
+
+```
+
+---
+
+# LoRaWAN DHT22 Node (incremental)
+
+--
+
+## Hardware
+
+* Arduino Uno
+* RFM-95B (SX1276)
+* DHT-22 (AM2302)
+
+![DHT22](images/humidity-temperature-sensor-dht22.jpg)
+
+https://tronixlabs.com.au/sensors/humidity/dht22-temperature-and-humidity-sensor-australia/ <!-- .element: style="font-size:xx-small;" -->
+--
+
+## Wiring plan
+
+![Arduino RFM95B DHT22](images/arduino_rfm95_dht22_bb.png)<!-- .element: class="inline" style="max-height:800px; vertical-align: top;" -->
+
+--
+
+## DHT22 connection plan
+
+| DHT22  | Arduino Uno     |
+| ------ | --------------- |
+| VCC    | 3.3V            |
+| DATA   | 7               |
+| -      | -               |
+| GND    | GND             |
+
+
+--
+
+## Additional installation
+
+* Install Arduino DHT Sensor library
+
+--
+
+## Configure TTN
+
+* Create application
+* Create device (activation = ABP)
+* Create decoder function (in Payload Formats)
+
+```js
+function Decoder(bytes, port) {
+    if(bytes.length == 4) {
+        var humidity = (bytes[0]<<8) | bytes[1];
+        var temperature = (bytes[2]<<8) | bytes[3];
+        return {
+            'humidity': humidity/ 100,
+            'temperature': temperature/100
+        }
+    } else {
+        return {
+            'error': 'payload unknown'
+        }
+    }
+}
+```
+
+--
+
+## Configure TTN parameters and pins
+
+* Open `ttn-abp-dht22`
+* Change code below
+* Compile, Flash, Restart Arduino
+* Open Serial Monitor
+
+```cpp
+/*
+ * Define data pin of DHT sensor
+ */
+#define DHTPIN 7
+
+/*
+ * DHT11 or DHT22
+ */
+#define DHTTYPE DHT22
+DHT dht(DHTPIN, DHTTYPE);
+
+// Network Session key (MSB)
+static const PROGMEM u1_t NWKSKEY[16] = { 0x.. };
+
+// Application Session Key (MSB)
+static const u1_t PROGMEM APPSKEY[16] = { 0x.. };
+
+// Device Address
+static const u4_t DEVADDR = 0x.... ;
+
+```
+
+--
+
+## How does it work?
+
+```cpp
+/**
+ * Schedules send callback
+ **/
+void onEvent (ev_t ev)
+/**
+ * Send callback -> send temp and humidity
+ */
+void do_send(osjob_t* j)
+/**
+ * Init LMIC,
+ * init DHT
+ **/
+void setup()
+void loop()
+
+```
+
+---
+
+# LoRaWAN Gateway
+
+--
+
+## Hardware
+
+* iC880A-SPI concentrator board
+* Pigtail for antenna
+* Raspberry Pi 3B
+* Antenna
+* Power Supply 2.5A with micro USB
+* MicroSD Card
+* RPi to iC880a interface (backplane from tindie)
+
+--
+
+## ic880A-SPI
+
+![ic880A-SPI](images/ic880a-spi.png)
+
+https://shop.imst.de/wireless-modules/lora-products/8/ic880a-spi-lorawan-concentrator-868-mhz <!-- .element: style="font-size:xx-small;" -->
+
+
+--
+
+## ic880A-SPI to PI wiring
+
+
+| iC880a pin | Description | PI pin           |
+|------------|-------------|------------------|
+| 21	     | Supply 5V   | 2                |
+| 22	     | GND	       | 6                |
+| 13	     | Reset	   | 22               |
+| 14	     | SPI CLK	   | 23               |
+| 15	     | MISO	       | 21               |
+| 16	     | MOSI        | 19               |
+| 17	     | NSS         | 24               |
+
+--
+
+## Preparation of PI
+
+* Install Raspbian
+* Enable SPI
+  * `sudo raspi-config`
+  * `Interfacing options -> P4 SPI`
+  * `Advanced options -> A1 Expand filesystem`
+* Configure Timezone and Locale
+  * `sudo dpkg-reconfigure locales`
+  * `sudo dpkg-reconfigure tzdata`
+* Get updates and get `git`
+  * `sudo apt-get update`
+  * `sudo apt-get upgrade`
+  * `sudo apt-get install git`
+
+--
+
+## Installation on PI
+
+* Create `ttn` user
+  * `sudo adduser ttn`
+  * `sudo adduser ttn sudo`
+* Get installer
+  * `git clone -b spi https://github.com/ttn-zh/ic880a-gateway.git ~/ic880a-gateway`
+  * `cd ~/ic880a-gateway`
+  * `sudo ./install.sh spi`
+* Write down the Gateway EUI
+
+--
+
+## Gateway configuration on TTN
+
+* Login to Console
+* Register new gateway
+* Enable `legacy packet forwarder`
+* Enter Gateway EUI (printed by installer)
+* Select EU (868MHz)
+* Confirm
+
+--
+
+## Links
+
+* https://github.com/ttn-zh/ic880a-gateway/wiki
+
+---
+
+# References
+
+--
+
+## MobileFish Tutorials
+
+ * https://www.mobilefish.com/download/lora/lora_partX.pdf (where X =[1..36])
+ * [Quick guide](https://www.mobilefish.com/developer/lorawan/lorawan_quickguide_build_lora_node_rfm95_arduino_uno.html)
+
+--
+
+## Heise Check Letter on ATTiny84
+
+ATTiny84
+* [Quick Guide ATTiny](https://www.heise.de/ct/artikel/Erste-Schritte-mit-den-Mikrocontrollern-ATtiny84-und-85-4399393.html?hg=1&hgi=1&hgf=false)
+* [attiny-base@github](https://github.com/jamct/attiny-base)
+* [pin layouts](https://github.com/SpenceKonde/ATTinyCore/blob/master/avr/extras/ATtiny_x4.md)
+
+Check Letter
+* [mailbox@github](https://github.com/jamct/radio-mailbox)
+
+<!-- * https://wiki.holisticon.de/display/IOT/HoLoRaWAN?preview=/127402322/129532943/Druckversion%20-%20IoT-Netz%20LoRaWAN_%20Briefkastensensor%20mit%20hoher%20Reichweite%20selber%20bauen%20_%20c%27t%20Magazin.pdf
+-->
+---
+</script></section>
+    </div>
+    <footer>
+        <img src="images/brand/holisticon-logo-grey.svg" class="holisticon-logo" alt="Holisticon AG">
+    </footer>
+
+</div>
+
+<script src="scripts/reveal.js"></script>
+
+<script>
+    // Configure Reveal
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+
+        width:  1024,
+        height: 768,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        // Display controls in the bottom right corner
+        controls: true,
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: false,
+        // Push each slide change to the browser history
+        history: true,
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.5,
+        maxScale: 100.0,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: 'scripts/reveal.classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'scripts/reveal.marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'scripts/reveal.markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'scripts/reveal.highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'scripts/reveal.zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'scripts/reveal.notes.js', async: true, condition: function() { return !!document.body.classList; } },
+            //{ src: 'scripts/reveal.search.js', async: true, condition: function() { return !!document.body.classList; } },
+            //{ src: 'scripts/reveal.remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+
+        ]
+    });
+</script>
+
+</body>
+
+</html>

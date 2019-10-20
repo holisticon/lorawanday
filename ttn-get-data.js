@@ -1,10 +1,13 @@
+/**
+ * Express server asking TTN on request to /data and delivering the measurements.
+ */
 
 const express = require('express')
 const https = require('https');
 const cors = require('cors');
 const app = express()
 
-console.log("Started DHT22 Demo LoraWAN reading Server. listening on :3000")
+console.log("Started DHT22 Demo LoraWAN reading Server. Listening on http://localhost:3000/data")
 
 
 app.use(cors());

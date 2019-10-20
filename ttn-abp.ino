@@ -1,12 +1,6 @@
 /*******************************************************************************
+ * Basic TTN ABP Hello World example.
  * Copyright (c) 2015 Thomas Telkamp and Matthijs Kooijman
- *
- * Permission is hereby granted, free of charge, to anyone
- * obtaining a copy of this document and accompanying files,
- * to do whatever they want with them without any restriction,
- * including, but not limited to, copying, modification and redistribution.
- * NO WARRANTY OF ANY KIND IS PROVIDED.
- *
  *******************************************************************************/
 
 #include <lmic.h>
@@ -24,7 +18,7 @@ static const PROGMEM u1_t NWKSKEY[16] = {  };
 static const u1_t PROGMEM APPSKEY[16] = {  };
 
 // LoRaWAN end-device address (DevAddr)
-static const u4_t DEVADDR = 0x; 
+static const u4_t DEVADDR = 0x;
 
 // These callbacks are only used in over-the-air activation, so they are
 // left empty here (we cannot leave them out completely unless
@@ -48,6 +42,9 @@ const lmic_pinmap lmic_pins = {
     .dio = {2, 3, LMIC_UNUSED_PIN},
 };
 
+/**
+ *  No hanges required below this line.
+ **/
 void onEvent (ev_t ev) {
     Serial.print(os_getTime());
     Serial.print(": ");
