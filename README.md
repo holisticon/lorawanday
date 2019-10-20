@@ -4,8 +4,7 @@ Slides and code samples for the LoRaWAN Day 2019 (18.10.2019) at @holisticon.
 
 ## The slides
 
-[reveal](./slides/)
-[PDF](./slides/slides.pdf)
+[PDF](./slides.pdf)
 
 ## The code
 
